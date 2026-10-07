@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ATH - Goes to Sains</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050b1a;--c:#00f0ff;--m:#ff2bd6;--g:#b6ff3c;--t:#e6faff;--d:#7fa7c4;--p:rgba(7,20,45,.86);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*:before,*:after{box-sizing:inherit}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;color:var(--t);font:600 18px/1.4 Rajdhani,system-ui,sans-serif;
+background:radial-gradient(60% 45% at 85% 0,#ff2bd633,transparent),radial-gradient(70% 55% at 5% 100%,#00f0ff2e,transparent),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34zM28 66v34M0 84l28 16 28-16' fill='none' stroke='%2300f0ff' stroke-opacity='.09' stroke-width='1.5'/%3E%3C/svg%3E"),var(--bg)}
+.scr{display:none;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:880px;margin:0 auto;padding:18px 14px;flex:1}
+.scr.on{display:flex}
+.neon{color:var(--c);text-shadow:0 0 6px var(--c),0 0 18px var(--c),0 0 42px #00f0ffaa}
+h1,h2,h3{font-family:Orbitron,system-ui,sans-serif;margin:0;text-align:center;letter-spacing:.06em}
+h1{font-weight:900;font-size:clamp(26px,6.4vw,48px);line-height:1.1}
+h2{font-size:clamp(22px,5vw,32px)}h3{font-size:17px;color:var(--m);text-shadow:0 0 8px var(--m);margin-top:10px}
+.sub{max-width:520px;text-align:center;color:var(--d);margin:0}
+#logo{animation:fk 2.6s .2s 1}
+@keyframes fk{0%,18%,22%,60%{opacity:1}20%,24%,55%{opacity:.25}}
+.card{background:var(--p);border:1px solid var(--c);box-shadow:0 0 18px #00f0ff44,inset 0 0 22px #00f0ff14;border-radius:14px;padding:18px;width:100%;max-width:440px}
+.card.w{max-width:680px}
+label{display:block;color:var(--d)}
+input{display:block;width:100%;margin:6px 0 12px;padding:11px 12px;background:#02060f;border:1px solid #1d4a6b;color:var(--t);border-radius:8px;font:600 20px Rajdhani,system-ui,sans-serif}
+input:focus{outline:2px solid var(--c);border-color:var(--c)}
+#err{color:#ff6b8b;min-height:1.4em}
+.btn{font:700 19px Orbitron,system-ui,sans-serif;letter-spacing:.08em;padding:12px 26px;border-radius:10px;border:2px solid var(--c);background:#00f0ff1a;color:var(--c);cursor:pointer;text-shadow:0 0 8px var(--c);box-shadow:0 0 14px #00f0ff55}
+.btn:hover,.btn:focus-visible{background:var(--c);color:#02060f;text-shadow:none;outline:0}
+.btn.m{border-color:var(--m);color:var(--m);background:#ff2bd61a;text-shadow:0 0 8px var(--m);box-shadow:0 0 14px #ff2bd655}
+.btn.m:hover,.btn.m:focus-visible{background:var(--m);color:#02060f}
+.btn.s{font-size:14px;padding:9px 16px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.hud{display:flex;justify-content:space-between;gap:6px 14px;width:100%;font:700 14px Orbitron,system-ui,sans-serif;flex-wrap:wrap}
+.hud b{color:var(--g)}#hl{color:#ff3b6b;letter-spacing:.15em}
+#tb{height:8px;width:100%;background:#0a2038;border-radius:4px;overflow:hidden}
+#tbi{height:100%;width:100%;background:var(--c);box-shadow:0 0 10px var(--c)}
+#q{background:var(--p);border:1px solid var(--m);box-shadow:0 0 14px #ff2bd644;border-radius:12px;padding:12px 16px;width:100%;font-size:clamp(19px,3.6vw,24px);text-align:center}
+#ar{position:relative;width:100%;height:min(56vh,470px);min-height:330px;border:1px solid #1d4a6b;border-radius:14px;overflow:hidden;background:#02060fcc}
+#ar.hit{box-shadow:inset 0 0 60px #ff2b4a}
+#mon{position:absolute;left:50%;top:4px;margin-left:-34px;animation:fl 2.2s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(8px)}}
+#ship{position:absolute;left:50%;bottom:8px;margin-left:-22px}
+.b{position:absolute;left:0;top:0;max-width:46%;padding:8px 14px;border-radius:999px;border:2px solid var(--m);background:#1a0620;color:#ffd6f7;font:700 17px Rajdhani,system-ui,sans-serif;cursor:crosshair;box-shadow:0 0 14px var(--m);will-change:transform}
+.b:hover,.b:focus-visible{background:var(--m);color:#fff;outline:0}
+.b.good{border-color:var(--g);box-shadow:0 0 20px var(--g);background:#122a06;color:var(--g)}
+.b.bad{border-color:#ff3b30;opacity:.55}
+#lz{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#ln{stroke:var(--c);stroke-width:3;opacity:0;filter:drop-shadow(0 0 6px var(--c))}
+#ln.f{animation:lf .25s}@keyframes lf{from{opacity:1}to{opacity:0}}
+.boom{position:absolute;width:24px;height:24px;margin:-12px;border-radius:50%;background:radial-gradient(#fff,#ffd400 35%,#ff2bd6 65%,transparent 72%);animation:bm .7s forwards;pointer-events:none}
+@keyframes bm{to{transform:scale(8);opacity:0}}
+.pt{position:absolute;font:900 24px Orbitron,sans-serif;color:var(--g);text-shadow:0 0 10px var(--g);animation:pt 1s forwards;pointer-events:none}
+@keyframes pt{to{transform:translateY(-50px);opacity:0}}
+#fb{min-height:1.4em;color:var(--g);text-align:center}
+.big{font:900 56px Orbitron,sans-serif;color:var(--g);text-shadow:0 0 16px var(--g);text-align:center;line-height:1.1}
+.row{display:grid;grid-template-columns:40px 1fr 72px 56px;gap:8px;padding:8px 10px;border-bottom:1px solid #12395a}
+.row.h{color:var(--d);font-size:15px}
+.r1{color:#ffd400}.r2{color:#dbe7f3}.r3{color:#ff9a5c}
+.row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0 14px}
+.tiles div{border:1px solid #1d4a6b;border-radius:10px;padding:10px;color:var(--d);text-align:center}
+.tiles b{display:block;font:900 28px Orbitron,sans-serif;color:var(--c);text-shadow:0 0 10px var(--c)}
+.bar{height:12px;background:#0a2038;border-radius:6px;margin:4px 0 12px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));border-radius:6px}
+.row2{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #12395a}
+footer{text-align:center;padding:12px;color:var(--d);font-size:15px;white-space:pre;border-top:1px solid #12395a;background:#02060f99}
+.lvb.on{background:var(--c);color:#02060f;text-shadow:none}.lvb:disabled{opacity:.4;cursor:not-allowed}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head>
+<body>
+
+<section id="s0" class="scr on">
+ <svg id="logo" viewBox="0 0 160 140" width="150" role="img" aria-label="Logo ATH"><polygon points="80,6 148,40 148,100 80,134 12,100 12,40" fill="#05142b" stroke="#00f0ff" stroke-width="4" style="filter:drop-shadow(0 0 8px #00f0ff)"/><polygon points="80,22 134,48 134,92 80,118 26,92 26,48" fill="none" stroke="#ff2bd6" stroke-width="1.5" opacity=".8"/><path d="M92 10L74 34h12l-6 16" stroke="#b6ff3c" fill="none" stroke-width="3" style="filter:drop-shadow(0 0 5px #b6ff3c)"/><text x="80" y="84" text-anchor="middle" font-family="Orbitron,sans-serif" font-weight="900" font-size="38" fill="#e6faff" style="filter:drop-shadow(0 0 6px #00f0ff)">ATH</text></svg>
+ <h1 class="neon">GOES TO SAINS</h1>
+ <p class="sub">Virus jahat menembakkan peluru berisi jawaban. Klik peluru dengan jawaban yang benar. Materi: Ikatan Kimia dan Stoikiometri. Ada 3 level: makin tinggi, makin cepat waktunya dan makin sulit soalnya.</p>
+ <div class="card">
+  <label>Nama<input id="nm" maxlength="24" autocomplete="name"></label>
+  <label>Kelas<input id="kl" maxlength="10" placeholder="contoh: XI.6"></label>
+  <div class="nav" id="lv"></div>
+  <div id="li" style="text-align:center;color:var(--d);font-size:16px;margin:8px 0"></div>
+  <div id="err" role="alert"></div>
+  <button class="btn" id="play" style="width:100%">PLAY</button>
+ </div>
+ <div class="nav"><button class="btn s m" id="blb">Papan Peringkat</button><button class="btn s" id="bdb">Dashboard</button></div>
+</section>
+
+<section id="s1" class="scr">
+ <div class="hud"><span><span id="hp"></span></span><span id="hl"></span><span>Skor <b id="hs">0</b></span><span>Soal <b id="hn"></b></span><span id="tt"></span></div>
+ <div id="tb"><div id="tbi"></div></div>
+ <div id="q"></div>
+ <div id="ar">
+  <svg id="mon" width="68" height="68" viewBox="-34 -34 68 68" aria-label="Virus"><circle r="26" fill="none" stroke="#b6ff3c" stroke-width="8" stroke-dasharray="4 16.4"/><circle r="21" fill="#14301a" stroke="#b6ff3c" stroke-width="3"/><path d="M-13-7L-3-1M13-7L3-1" stroke="#ff2bd6" stroke-width="3"/><circle cx="-8" cy="3" r="3.5" fill="#ff2bd6"/><circle cx="8" cy="3" r="3.5" fill="#ff2bd6"/><path d="M-9 13Q0 7 9 13" stroke="#ff2bd6" fill="none" stroke-width="3"/></svg>
+  <svg id="lz"><line id="ln" x1="0" y1="0" x2="0" y2="0"/></svg>
+  <svg id="ship" width="44" height="40" viewBox="0 0 44 40"><path d="M22 2L40 36L22 28L4 36Z" fill="#021a2b" stroke="#00f0ff" stroke-width="3" stroke-linejoin="round" style="filter:drop-shadow(0 0 5px #00f0ff)"/></svg>
+ </div>
+ <div id="fb" aria-live="polite"></div>
+</section>
+
+<section id="s2" class="scr">
+ <h2 class="neon">MISI SELESAI</h2>
+ <p id="et" class="sub"></p>
+ <div class="card" style="text-align:center">
+  <div>Nama: <b id="en"></b></div>
+  <div>Kelas: <b id="ek"></b></div>
+  <div>Level: <b id="el"></b></div>
+  <div style="color:var(--d);margin-top:8px">Skor</div>
+  <div class="big" id="es">0</div>
+ </div>
+ <div class="nav"><button class="btn" id="nxt" hidden>LEVEL BERIKUTNYA</button><button class="btn" id="again">MAIN LAGI</button><button class="btn m" id="done">SELESAI</button></div>
+ <div class="nav"><button class="btn s m" id="blb2">Papan Peringkat</button><button class="btn s" id="bdb2">Dashboard</button></div>
+</section>
+
+<section id="s3" class="scr">
+ <h2 class="neon">PAPAN PERINGKAT</h2>
+ <p class="sub" id="src"></p>
+ <div class="card w"><div class="row h"><span>#</span><span>Nama</span><span>Kelas</span><span>Skor</span></div><div id="lbr"></div></div>
+ <button class="btn s back">Kembali</button>
+</section>
+
+<section id="s4" class="scr">
+ <h2 class="neon">DASHBOARD</h2>
+ <div class="card w" id="dbc"></div>
+ <button class="btn s back">Kembali</button>
+</section>
+
+<footer>Created by : ATHIEF MASRURY  - Kelas XI.6</footer>
+
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),TIME=60000;
+const B=[
+['I','Ikatan antara atom logam dan nonlogam melalui serah terima elektron disebut ikatan...',['ion','kovalen','logam','hidrogen']],
+['I','Ikatan kimia pada molekul air (H₂O) adalah ikatan...',['kovalen','ion','logam','van der Waals']],
+['I','Atom Na melepas 1 elektron sehingga menjadi ion...',['Na⁺','Na⁻','Na²⁺','Na²⁻']],
+['I','Atom Cl menerima 1 elektron sehingga menjadi ion...',['Cl⁻','Cl⁺','Cl²⁻','Cl²⁺']],
+['I','Menurut aturan oktet, atom stabil jika kulit terluarnya berisi 8 elektron seperti...',['gas mulia','halogen','logam alkali','logam transisi']],
+['I','"Lautan elektron" adalah ciri khas ikatan...',['logam','ion','kovalen','hidrogen']],
+['I','Ikatan kovalen terjadi antara...',['sesama unsur nonlogam','logam dan nonlogam','sesama logam','gas mulia dan logam']],
+['I','Logam dapat menghantarkan listrik karena...',['elektron valensinya bebas bergerak','ion-ionnya bergerak bebas','intinya bermuatan negatif','tidak punya elektron']],
+['S','Bilangan Avogadro adalah...',['6,02 × 10²³ partikel','6,02 × 10²² partikel','22,4 partikel','3,01 × 10²³ partikel']],
+['S','Mol dari 36 g H₂O (Mr = 18) adalah...',['2 mol','0,5 mol','4 mol','18 mol']],
+['S','Mol dari 11,2 L gas pada STP adalah...',['0,5 mol','1 mol','2 mol','11,2 mol']],
+['S','Massa 2 mol NaCl (Mr = 58,5) adalah...',['117 g','58,5 g','29,25 g','234 g']],
+['S','Jumlah partikel dalam 0,5 mol zat adalah...',['3,01 × 10²³','6,02 × 10²³','1,2 × 10²⁴','3,01 × 10²²']],
+['S','Molaritas larutan berisi 0,5 mol zat dalam 250 mL adalah...',['2 M','0,5 M','0,125 M','4 M']],
+['S','Volume 2 mol gas pada STP adalah...',['44,8 L','22,4 L','11,2 L','2 L']],
+['S','Mr H₂SO₄ (Ar H = 1, S = 32, O = 16) adalah...',['98','50','64','34']],
+['S','Mr CO₂ (Ar C = 12, O = 16) adalah...',['44','28','32','60']],
+['I','Unsur yang membentuk ikatan ion dengan Cl adalah...',['Na','C','N','O']],
+['S','Massa 0,2 mol NaOH (Mr = 40) adalah...',['8 g','4 g','20 g','0,8 g']],
+['S','Volume 8 g gas O₂ (Mr = 32) pada STP adalah...',['5,6 L','11,2 L','22,4 L','2,8 L']],
+['S','Jumlah molekul dalam 9 g H₂O (Mr = 18) adalah...',['3,01 × 10²³','6,02 × 10²³','1,5 × 10²³','9,03 × 10²³']],
+['S','Molaritas larutan 4 g NaOH (Mr = 40) dalam 500 mL adalah...',['0,2 M','0,1 M','0,8 M','2 M']],
+['S','Massa NaCl (Mr = 58,5) untuk membuat 200 mL larutan 0,5 M adalah...',['5,85 g','11,7 g','58,5 g','2,925 g']],
+['I','Rumus senyawa dari Mg (golongan IIA) dan Cl (golongan VIIA) adalah...',['MgCl₂','MgCl','Mg₂Cl','Mg₂Cl₃']],
+['I','Dua atom O dalam molekul O₂ berikatan kovalen...',['rangkap dua','tunggal','rangkap tiga','koordinasi']]];
+const QL=[1,1,1,1,1,1,2,2,1,2,2,2,2,3,1,2,2,2,3,3,3,3,3,3,3];
+const LV=[0,{n:'Level 1 Mudah',t:60000,sp:1,lv:3,pt:10},{n:'Level 2 Sedang',t:45000,sp:1.6,lv:3,pt:15},{n:'Level 3 Sulit',t:30000,sp:2.4,lv:2,pt:20}];
+let SEL=1;const UL=()=>{try{return+localStorage.getItem('ath_u')||1}catch(e){return 1}};
+function rlv(){SEL=Math.min(SEL,UL());const el=$('#lv');el.innerHTML='';[1,2,3].forEach(i=>{const b=document.createElement('button');b.className='btn s lvb'+(i===SEL?' on':'');b.disabled=i>UL();b.textContent=LV[i].n+(i>UL()?' (terkunci)':'');b.onclick=()=>{SEL=i;rlv()};el.append(b)});
+const c=LV[SEL];$('#li').textContent=c.t/1000+' dtk per soal · '+c.lv+' nyawa · +'+c.pt+' per jawaban benar'+(SEL<3?' · selesaikan untuk membuka level berikutnya':'')}
+let P=null,S={},AC,DB=null;
+const LS={get(){try{return JSON.parse(localStorage.getItem('ath_h')||'[]')}catch(e){return[]}},add(r){try{localStorage.setItem('ath_h',JSON.stringify(this.get().concat(r).slice(-300)))}catch(e){}}};
+try{const p=JSON.parse(localStorage.getItem('ath_p'));if(p){$('#nm').value=p.name;$('#kl').value=p.kelas}}catch(e){}
+try{claude.use('db').then(d=>DB=d).catch(()=>{})}catch(e){}
+rlv();const go=id=>document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id===id));
+const shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]);
+
+function snd(ok){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();AC.resume();const a=AC,t=a.currentTime,g=a.createGain();g.connect(a.destination);
+if(ok){const n=a.createBuffer(1,a.sampleRate*.7,a.sampleRate),d=n.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
+const s=a.createBufferSource(),f=a.createBiquadFilter();s.buffer=n;f.type='lowpass';f.frequency.setValueAtTime(2000,t);f.frequency.exponentialRampToValueAtTime(70,t+.7);g.gain.value=.9;s.connect(f);f.connect(g);s.start();
+const o=a.createOscillator();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(30,t+.5);o.connect(g);o.start();o.stop(t+.5)}
+else{const o=a.createOscillator();o.type='sawtooth';o.frequency.setValueAtTime(180,t);o.frequency.exponentialRampToValueAtTime(55,t+.4);g.gain.setValueAtTime(.25,t);g.gain.exponentialRampToValueAtTime(.001,t+.4);o.connect(g);o.start();o.stop(t+.4)}}catch(e){}}
+
+$('#play').onclick=()=>{const n=$('#nm').value.trim(),k=$('#kl').value.trim();if(!n||!k){$('#err').textContent='Isi nama dan kelas dulu.';return}
+$('#err').textContent='';P={name:n,kelas:k};try{localStorage.setItem('ath_p',JSON.stringify(P))}catch(e){}begin()};
+function begin(){const c=LV[SEL];S={c,L:SEL,T:c.t,score:0,lives:c.lv,i:0,ok:0,qs:shuf(B.filter((_,i)=>QL[i]===SEL)),st:{I:[0,0],S:[0,0]},bl:[],run:1,lt:0};$('#hp').textContent=P.name+' · '+P.kelas+' · '+c.n;go('s1');next();requestAnimationFrame(loop)}
+function hud(){$('#hl').textContent='♥'.repeat(S.lives)+'♡'.repeat(S.c.lv-S.lives);$('#hs').textContent=S.score;$('#hn').textContent=Math.min(S.i+1,S.qs.length)+'/'+S.qs.length}
+function next(){if(S.lives<=0||S.i>=S.qs.length)return fin();
+const ar=$('#ar'),[tp,q,a]=S.qs[S.i],W=ar.clientWidth;S.cur={tp,a0:a[0]};S.lock=0;S.dl=performance.now()+S.T;
+ar.querySelectorAll('.b,.boom,.pt').forEach(e=>e.remove());ar.classList.remove('hit');$('#q').textContent=q;$('#fb').textContent='';$('#tbi').style.background='var(--c)';hud();
+S.bl=shuf(a.map((t,i)=>[t,i===0])).map(([t,ok],i)=>{const e=document.createElement('button');e.className='b';e.textContent=t;ar.append(e);
+const o={e,ok,x:W*(.08+.2*i),y:64,vx:(Math.random()<.5?-1:1)*(40+Math.random()*55)*S.c.sp,vy:(30+Math.random()*45)*S.c.sp};e.onclick=()=>shoot(o);return o})}
+function loop(t){if(!S.run)return;const dt=Math.min((t-(S.lt||t))/1000,.05);S.lt=t;
+if(!S.lock){const ar=$('#ar'),W=ar.clientWidth,H=ar.clientHeight;
+S.bl.forEach(o=>{const w=o.e.offsetWidth,h=o.e.offsetHeight;o.x+=o.vx*dt;o.y+=o.vy*dt;
+if(o.x<0){o.x=0;o.vx=Math.abs(o.vx)}if(o.x>W-w){o.x=W-w;o.vx=-Math.abs(o.vx)}
+if(o.y<64){o.y=64;o.vy=Math.abs(o.vy)}if(o.y>H-h-62){o.y=H-h-62;o.vy=-Math.abs(o.vy)}
+o.e.style.transform='translate('+o.x+'px,'+o.y+'px)'});
+const left=Math.max(0,S.dl-t);$('#tt').textContent=Math.ceil(left/1000)+' dtk';$('#tbi').style.width=left/S.T*100+'%';if(left<10000)$('#tbi').style.background='var(--m)';
+if(left<=0){S.lock=1;miss('Waktu habis! ')}}
+requestAnimationFrame(loop)}
+function miss(pre){const T=S.cur.tp;S.st[T][1]++;S.lives--;snd(0);$('#ar').classList.add('hit');S.bl.forEach(o=>o.ok&&o.e.classList.add('good'));$('#fb').textContent=pre+'Jawaban benar: '+S.cur.a0;S.i++;hud();setTimeout(next,1800)}
+function shoot(o){if(S.lock)return;S.lock=1;const ar=$('#ar'),W=ar.clientWidth,H=ar.clientHeight,cx=o.x+o.e.offsetWidth/2,cy=o.y+o.e.offsetHeight/2,l=$('#ln');
+l.setAttribute('x1',W/2);l.setAttribute('y1',H-30);l.setAttribute('x2',cx);l.setAttribute('y2',cy);l.classList.remove('f');void l.getBoundingClientRect();l.classList.add('f');
+if(o.ok){const T=S.cur.tp;S.st[T][1]++;S.st[T][0]++;S.ok++;S.score+=S.c.pt;snd(1);S.bl.forEach(b=>b.e.remove());
+const b=document.createElement('div');b.className='boom';b.style.left=cx+'px';b.style.top=cy+'px';const p=document.createElement('div');p.className='pt';p.textContent='+'+S.c.pt;p.style.left=(cx-20)+'px';p.style.top=cy+'px';ar.append(b,p);
+S.i++;hud();setTimeout(next,1000)}
+else{o.e.classList.add('bad');miss('')}}
+function fin(){S.run=0;const r={name:P.name,kelas:P.kelas,score:S.score,ok:S.ok,n:S.i,I:S.st.I,S:S.st.S,lv:S.L,t:Date.now()};LS.add(r);
+if(DB)DB.collection('scores').add({name:r.name,kelas:r.kelas,score:r.score,lv:r.lv,t:r.t}).catch(()=>{});
+$('#en').textContent=P.name;$('#ek').textContent=P.kelas;$('#es').textContent=S.score;
+const w=S.lives>0;$('#el').textContent=S.c.n;$('#et').textContent=w?'Semua soal selesai. Virus berhasil dikalahkan!':'Nyawa habis. Virus menang kali ini.';SEL=S.L;
+if(w&&S.L<3&&UL()<=S.L){try{localStorage.setItem('ath_u',S.L+1)}catch(e){}}
+$('#nxt').hidden=!(w&&S.L<3);rlv();go('s2')}
+
+$('#again').onclick=()=>begin();$('#nxt').onclick=()=>{SEL=S.L+1;begin()};$('#done').onclick=()=>go('s0');
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go('s0'));
+$('#blb').onclick=$('#blb2').onclick=lb;$('#bdb').onclick=$('#bdb2').onclick=dash;
+
+async function lb(){go('s3');const el=$('#lbr');el.textContent='Memuat...';let rows=LS.get(),src='skor di perangkat ini';
+if(DB){try{const s=await DB.collection('scores').orderBy('score','desc').limit(100).get();rows=s.docs.map(d=>d.data());src='skor semua pemain'}catch(e){}}
+const m=new Map();rows.forEach(r=>{const k=r.name+'|'+r.kelas;if(!m.has(k)||m.get(k).score<r.score)m.set(k,r)});
+const a=[...m.values()].sort((x,y)=>y.score-x.score).slice(0,10);$('#src').textContent='10 terbaik, '+src;
+el.innerHTML=a.length?a.map((r,i)=>'<div class="row r'+(i+1)+'"><b>'+(i+1)+'</b><span>'+esc(r.name)+'</span><span>'+esc(r.kelas)+'</span><b>'+(+r.score||0)+'</b></div>').join(''):'<p>Belum ada skor. Jadilah yang pertama!</p>'}
+function dash(){go('s4');const el=$('#dbc'),h=LS.get(),p=P||h[h.length-1],g=p?h.filter(r=>r.name===p.name&&r.kelas===p.kelas):[];
+if(!g.length){el.innerHTML='<p>Belum ada permainan. Tekan Play untuk mulai.</p>';return}
+const sum=f=>g.reduce((a,r)=>a+f(r),0),n=g.length,ans=sum(r=>r.n),acc=ans?Math.round(sum(r=>r.ok)/ans*100):0;
+const tp=(k,l)=>{const c=sum(r=>r[k][0]),t=sum(r=>r[k][1]),v=t?Math.round(c/t*100):0;return '<div>'+l+' <b>'+v+'%</b> ('+c+'/'+t+' benar)</div><div class="bar"><i style="width:'+v+'%"></i></div>'};
+el.innerHTML='<h3>'+esc(p.name)+' · '+esc(p.kelas)+'</h3><div class="tiles"><div><b>'+n+'</b>permainan</div><div><b>'+Math.max(...g.map(r=>r.score))+'</b>skor terbaik</div><div><b>'+Math.round(sum(r=>r.score)/n)+'</b>rata-rata skor</div><div><b>'+acc+'%</b>akurasi</div></div>'
++tp('I','Ikatan Kimia')+tp('S','Stoikiometri')+'<h3>Skor terbaik per level</h3>'+[1,2,3].map(i=>{const q=g.filter(r=>(r.lv||1)===i).map(r=>r.score);return '<div class="row2"><span>'+LV[i].n+'</span><b>'+(q.length?Math.max(...q):'-')+'</b></div>'}).join('')+'<h3>Permainan terakhir</h3>'+g.slice(-5).reverse().map(r=>'<div class="row2"><span>'+new Date(r.t).toLocaleDateString('id-ID')+'</span><b>'+r.score+' poin</b></div>').join('')}
+</script>
+</body></html>
