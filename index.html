@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050b1a">
+<title>ATS - Goes to Sains</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ========== DASAR ========== */
+:root{--bg:#050b1a;--c:#00f0ff;--m:#ff2bd6;--g:#b6ff3c;--y:#ffd400;--r:#ff3b6b;--t:#e6faff;--d:#7fa7c4;--line:#1d4a6b;--p:rgba(7,20,45,.86);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+*,*:before,*:after{box-sizing:inherit}
+[hidden]{display:none!important}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;color:var(--t);font:600 18px/1.4 Rajdhani,system-ui,sans-serif;
+background:radial-gradient(60% 45% at 85% 0,#ff2bd633,transparent),radial-gradient(70% 55% at 5% 100%,#00f0ff2e,transparent),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34zM28 66v34M0 84l28 16 28-16' fill='none' stroke='%2300f0ff' stroke-opacity='.09' stroke-width='1.5'/%3E%3C/svg%3E"),var(--bg)}
+.scr{display:none;flex-direction:column;align-items:center;gap:14px;width:100%;max-width:880px;margin:0 auto;padding:18px 14px;flex:1}
+.scr.on{display:flex}
+h1,h2,h3{font-family:Orbitron,system-ui,sans-serif;margin:0;text-align:center;letter-spacing:.06em}
+h2{font-size:clamp(22px,5vw,32px)}
+h3{font-size:17px;color:var(--m);text-shadow:0 0 8px var(--m);margin-top:10px}
+.neon{color:var(--c);text-shadow:0 0 6px var(--c),0 0 18px var(--c),0 0 42px #00f0ffaa}
+.title{font-weight:900;font-size:clamp(26px,6.4vw,48px);line-height:1.1;background:linear-gradient(90deg,#00f0ff,#e6faff 35%,#ff2bd6 65%,#00f0ff);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 14px #00f0ff77);animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
+.sub{max-width:540px;text-align:center;color:var(--d);margin:0}
+#logo{animation:fk 2.6s .2s 1;filter:drop-shadow(0 0 18px #00f0ff55)}
+@keyframes fk{0%,18%,22%,60%{opacity:1}20%,24%,55%{opacity:.25}}
+
+/* ========== KARTU, FORM, TOMBOL ========== */
+.card{position:relative;width:100%;max-width:440px;padding:18px;border-radius:16px;border:1px solid #00f0ff88;background:linear-gradient(180deg,#0a1c3ae6,#050e20ee);box-shadow:0 0 22px #00f0ff33,inset 0 0 26px #00f0ff12}
+.card:before,.card:after{content:"";position:absolute;width:18px;height:18px;pointer-events:none}
+.card:before{left:-1px;top:-1px;border-top:3px solid var(--m);border-left:3px solid var(--m);border-radius:16px 0 0 0}
+.card:after{right:-1px;bottom:-1px;border-bottom:3px solid var(--m);border-right:3px solid var(--m);border-radius:0 0 16px 0}
+.card.w{max-width:680px}
+label{display:block;color:var(--d)}
+input{display:block;width:100%;margin:6px 0 12px;padding:11px 12px;background:#02060f;border:1px solid var(--line);color:var(--t);border-radius:8px;font:600 20px Rajdhani,system-ui,sans-serif}
+input:focus{outline:2px solid var(--c);border-color:var(--c)}
+#err{color:#ff6b8b;min-height:1.4em}
+.btn{font:700 19px Orbitron,system-ui,sans-serif;letter-spacing:.08em;padding:12px 26px;border-radius:10px;border:2px solid var(--c);background:#00f0ff1a;color:var(--c);cursor:pointer;text-shadow:0 0 8px var(--c);box-shadow:0 0 14px #00f0ff55;transition:background .15s,color .15s,transform .1s}
+.btn:hover,.btn:focus-visible{background:var(--c);color:#02060f;text-shadow:none;outline:0}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn.m{border-color:var(--m);color:var(--m);background:#ff2bd61a;text-shadow:0 0 8px var(--m);box-shadow:0 0 14px #ff2bd655}
+.btn.m:hover,.btn.m:focus-visible{background:var(--m);color:#02060f}
+.btn.s{font-size:14px;padding:9px 16px}
+#play{width:100%;font-size:22px;padding:14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+
+/* ========== MENU: LEVEL & CARA MAIN ========== */
+.lvs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:4px 0 2px}
+.lvb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:9px 2px 7px;border-radius:10px;border:2px solid var(--line);background:#06142b;color:var(--d);cursor:pointer;font-family:inherit;transition:border-color .15s,box-shadow .15s,color .15s}
+.lvb i{font:900 22px/1 Orbitron,system-ui,sans-serif;font-style:normal}
+.lvb small{font:700 11px Rajdhani,system-ui,sans-serif;letter-spacing:.04em}
+.lvb:hover:not(:disabled),.lvb:focus-visible{border-color:var(--c);color:var(--t);outline:0}
+.lvb.on{border-color:var(--c);color:var(--c);background:#00f0ff1f;box-shadow:0 0 16px #00f0ff77,inset 0 0 12px #00f0ff22}
+.lvb:disabled{opacity:.45;cursor:not-allowed}
+#li{text-align:center;color:var(--d);font-size:16px;margin:8px 0;min-height:3em}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;width:100%;max-width:680px}
+.how div{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:#06142b99;color:var(--d);font-size:16px;line-height:1.3}
+.how b{display:block;font:700 15px Orbitron,system-ui,sans-serif;color:var(--c);margin-bottom:3px}
+
+/* ========== HUD & ARENA ========== */
+.hud{display:flex;justify-content:space-between;align-items:center;gap:6px 12px;width:100%;font:700 14px Orbitron,system-ui,sans-serif;flex-wrap:wrap}
+.hud b{color:var(--g)}
+.chip{padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:#05102499;font-size:13px}
+#hl{color:var(--r);letter-spacing:.15em;text-shadow:0 0 8px #ff3b6b88}
+#tt{min-width:56px;text-align:right}
+.tools{display:flex;gap:8px}
+.ic{width:38px;height:38px;display:grid;place-items:center;padding:0;border-radius:10px;border:1px solid var(--line);background:#051024cc;color:var(--c);cursor:pointer}
+.ic:hover,.ic:focus-visible{border-color:var(--c);box-shadow:0 0 12px #00f0ff66;outline:0}
+.ic.off{color:var(--d)}
+.ic .x{display:none}.ic.off .x{display:inline}.ic.off .w{display:none}
+#tb{height:8px;width:100%;background:#0a2038;border-radius:4px;overflow:hidden}
+#tbi{height:100%;width:100%;background:linear-gradient(90deg,var(--c),#7af7ff);box-shadow:0 0 10px var(--c)}
+#tbi.low{background:linear-gradient(90deg,var(--m),var(--r));box-shadow:0 0 10px var(--m)}
+#q{width:100%;padding:12px 16px;border:1px solid var(--m);border-radius:12px;background:var(--p);box-shadow:0 0 14px #ff2bd644;text-align:center;font-size:clamp(19px,3.6vw,24px)}
+#ar{position:relative;width:100%;height:min(54vh,540px);min-height:340px;border:1px solid var(--line);border-radius:16px;overflow:hidden;
+background:radial-gradient(70% 55% at 50% 0,#12306a66,transparent),radial-gradient(60% 50% at 92% 100%,#ff2bd626,transparent),linear-gradient(#030a18,#04122a);box-shadow:0 0 24px #00f0ff22,inset 0 0 40px #00f0ff10;transition:box-shadow .25s}
+@supports(height:1dvh){#ar{height:min(54dvh,540px)}}
+#ar.hit{box-shadow:inset 0 0 70px #ff2b4a,0 0 24px #ff2b4a66}
+#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:crosshair;-webkit-tap-highlight-color:transparent}
+#fb{min-height:1.4em;color:var(--g);text-align:center}
+#fb.bad{color:#ff8aa0}
+.ctl{display:flex;align-items:center;justify-content:center;gap:14px;width:100%}
+.hint{flex:1;color:var(--d);font-size:15px;line-height:1.3;text-align:center}
+.h-t{display:none}
+#fire{display:none;flex:none;width:86px;height:86px;border-radius:50%;border:3px solid var(--m);background:radial-gradient(circle at 50% 35%,#ff2bd666,#1a0620);color:#fff;font:900 13px Orbitron,system-ui,sans-serif;letter-spacing:.06em;box-shadow:0 0 22px #ff2bd699,inset 0 0 14px #ff2bd666;cursor:pointer;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+#fire.dn{transform:scale(.93);background:var(--m);color:#02060f}
+@media (pointer:coarse){#fire{display:block}.h-k{display:none}.h-t{display:inline}}
+body.touch #fire{display:block}body.touch .h-k{display:none}body.touch .h-t{display:inline}
+
+/* ========== OVERLAY (MULAI / JEDA) ========== */
+#ov{position:absolute;inset:0;z-index:6;display:flex;align-items:center;justify-content:center;padding:14px;text-align:center;background:rgba(2,6,15,.82);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.ovc{max-width:400px;display:flex;flex-direction:column;align-items:center;gap:10px}
+#ovs{font:700 16px Orbitron,system-ui,sans-serif;color:var(--m);text-shadow:0 0 10px var(--m);letter-spacing:.2em}
+#ovl{list-style:none;margin:4px 0;padding:0;text-align:left;color:var(--d);font-size:16px;line-height:1.3}
+#ovl li{position:relative;padding:3px 0 3px 18px}
+#ovl li:before{content:"";position:absolute;left:2px;top:.62em;width:7px;height:7px;background:var(--c);transform:rotate(45deg);box-shadow:0 0 8px var(--c)}
+
+/* ========== HASIL, PERINGKAT, DASHBOARD ========== */
+.stars{font:900 34px Orbitron,system-ui,sans-serif;color:var(--y);text-shadow:0 0 14px var(--y);letter-spacing:.2em}
+.big{font:900 56px Orbitron,sans-serif;color:var(--g);text-shadow:0 0 16px var(--g);text-align:center;line-height:1.1}
+.row{display:grid;grid-template-columns:28px 1fr 58px 32px 52px;gap:8px;padding:8px 10px;border-bottom:1px solid #12395a}
+.row.h{color:var(--d);font-size:15px}
+.r1{color:var(--y)}.r2{color:#dbe7f3}.r3{color:#ff9a5c}
+.row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:10px 0 14px}
+.tiles div{border:1px solid var(--line);border-radius:10px;padding:10px;color:var(--d);text-align:center}
+.tiles b{display:block;font:900 28px Orbitron,sans-serif;color:var(--c);text-shadow:0 0 10px var(--c)}
+.bar{height:12px;background:#0a2038;border-radius:6px;margin:4px 0 12px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--g));border-radius:6px}
+.row2{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #12395a}
+footer{text-align:center;padding:12px 14px;color:var(--d);font-size:15px;border-top:1px solid #12395a;background:#02060f99}
+footer b{color:var(--t);font-weight:700}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head>
+<body>
+
+<!-- ========== MENU ========== -->
+<section id="s0" class="scr on">
+ <svg id="logo" viewBox="0 0 160 140" width="150" role="img" aria-label="Logo ATS"><polygon points="80,6 148,40 148,100 80,134 12,100 12,40" fill="#05142b" stroke="#00f0ff" stroke-width="4"/><polygon points="80,22 134,48 134,92 80,118 26,92 26,48" fill="none" stroke="#ff2bd6" stroke-width="1.5" opacity=".8"/><path d="M92 10L74 34h12l-6 16" stroke="#b6ff3c" fill="none" stroke-width="3"/><text x="80" y="84" text-anchor="middle" font-family="Orbitron,sans-serif" font-weight="900" font-size="38" fill="#e6faff">ATS</text></svg>
+ <h1 class="title">GOES TO SAINS</h1>
+ <p class="sub">Virus jahat menyerang! Terbangkan pesawatmu, hancurkan virus penghadang, lalu tembak jawaban yang benar. Materi: Ikatan Kimia dan Stoikiometri. Ada 5 level: makin tinggi, makin cepat waktunya, makin kuat virusnya.</p>
+ <div class="card">
+  <label>Nama<input id="nm" maxlength="24" autocomplete="name"></label>
+  <label>Kelas<input id="kl" maxlength="10" placeholder="contoh: XI.6"></label>
+  <div class="lvs" id="lv" role="group" aria-label="Pilih level"></div>
+  <div id="li"></div>
+  <div id="err" role="alert"></div>
+  <button class="btn" id="play">PLAY</button>
+ </div>
+ <div class="how">
+  <div><b>Gerak</b>Panah / WASD, mouse, atau geser jari di arena.</div>
+  <div><b>Tembak</b>Spasi, klik mouse, atau tombol TEMBAK.</div>
+  <div><b>Misi</b>Hancurkan virus penghadang, lalu tembak jawaban yang benar. Peluru salah atau tertabrak virus mengurangi nyawa.</div>
+ </div>
+ <div class="nav"><button class="btn s m" id="blb">Papan Peringkat</button><button class="btn s" id="bdb">Dashboard</button></div>
+</section>
+
+<!-- ========== PERMAINAN ========== -->
+<section id="s1" class="scr">
+ <div class="hud">
+  <span class="chip" id="hp"></span>
+  <span class="tools">
+   <button class="ic" id="bsnd" aria-label="Suara" aria-pressed="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path class="w" d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/><path class="x" d="M17 9l5 6M22 9l-5 6"/></svg></button>
+   <button class="ic" id="bpause" aria-label="Jeda"><svg viewBox="0 0 24 24" width="20" height="20"><rect x="6" y="5" width="4" height="14" rx="1" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1" fill="currentColor"/></svg></button>
+  </span>
+ </div>
+ <div class="hud"><span id="hl"></span><span>Skor <b id="hs">0</b></span><span>Soal <b id="hn"></b></span><span>Virus <b id="hk">0</b></span><span id="tt"></span></div>
+ <div id="tb"><div id="tbi"></div></div>
+ <div id="q"></div>
+ <div id="ar">
+  <canvas id="cv" role="img" aria-label="Arena pertempuran pesawat melawan virus"></canvas>
+  <div id="ov" hidden>
+   <div class="ovc">
+    <h2 class="neon" id="ovt"></h2>
+    <div id="ovs"></div>
+    <ul id="ovl"></ul>
+    <div class="nav"><button class="btn" id="ovgo"></button><button class="btn s m" id="ovq">KELUAR</button></div>
+   </div>
+  </div>
+ </div>
+ <div id="fb" aria-live="polite"></div>
+ <div class="ctl">
+  <div class="hint"><span class="h-k">Panah / WASD gerak · Spasi atau klik tembak · P jeda</span><span class="h-t">Geser jari di arena untuk bergerak. Tahan TEMBAK untuk menembak.</span></div>
+  <button id="fire" aria-label="Tembak">TEMBAK</button>
+ </div>
+</section>
+
+<!-- ========== HASIL ========== -->
+<section id="s2" class="scr">
+ <h2 class="neon" id="eh">MISI SELESAI</h2>
+ <div class="stars" id="est" aria-hidden="true"></div>
+ <p id="et" class="sub"></p>
+ <div class="card" style="text-align:center">
+  <div>Nama: <b id="en"></b></div>
+  <div>Kelas: <b id="ek"></b></div>
+  <div>Level: <b id="el"></b></div>
+  <div style="color:var(--d);margin-top:8px">Skor</div>
+  <div class="big" id="es">0</div>
+  <div class="tiles"><div><b id="ev">0</b>virus dihancurkan</div><div><b id="ea">0%</b>akurasi jawaban</div></div>
+ </div>
+ <div class="nav"><button class="btn" id="nxt" hidden>LEVEL BERIKUTNYA</button><button class="btn" id="again">MAIN LAGI</button><button class="btn m" id="done">SELESAI</button></div>
+ <div class="nav"><button class="btn s m" id="blb2">Papan Peringkat</button><button class="btn s" id="bdb2">Dashboard</button></div>
+</section>
+
+<section id="s3" class="scr">
+ <h2 class="neon">PAPAN PERINGKAT</h2>
+ <p class="sub" id="src"></p>
+ <div class="card w"><div class="row h"><span>#</span><span>Nama</span><span>Kelas</span><span>Lv</span><span>Skor</span></div><div id="lbr"></div></div>
+ <button class="btn s back">Kembali</button>
+</section>
+
+<section id="s4" class="scr">
+ <h2 class="neon">DASHBOARD</h2>
+ <div class="card w" id="dbc"></div>
+ <button class="btn s back">Kembali</button>
+</section>
+
+<footer>Created by : <b>ATHIEF MASRURY</b> &amp; <b>SKY JOVIAL HARTONO</b> - Kelas XI.6</footer>
+
+<script>
+'use strict';
+/* ==========================================================
+   ATS - Goes to Sains
+   1. Util & penyimpanan   2. Level & bank soal   3. Menu
+   4. Suara                5. Mesin permainan     6. Gambar (canvas)
+   7. Kontrol              8. Hasil, peringkat, dashboard
+   ========================================================== */
+
+/* ---------- 1. UTIL & PENYIMPANAN ---------- */
+const $=s=>document.querySelector(s),
+ esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
+ clamp=(v,a,b)=>Math.max(a,Math.min(b,v)),
+ rnd=(a,b)=>a+Math.random()*(b-a),
+ shuf=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(x=>x[1]),
+ RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:v}catch(e){return d}},
+ lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const UL=()=>clamp(+lsGet('ath_u',1)||1,1,5);   /* level tertinggi yang terbuka */
+const LS={
+ get(){try{const h=JSON.parse(lsGet('ath_h','[]'));return Array.isArray(h)?h:[]}catch(e){return[]}},
+ add(r){lsSet('ath_h',JSON.stringify(this.get().concat(r).slice(-300)))}
+};
+let DB=null;   /* database bersama (hanya aktif jika tersedia di tempat game di-host) */
+try{claude.use('db').then(d=>DB=d).catch(()=>{})}catch(e){}
+
+/* ---------- 2. LEVEL & BANK SOAL ---------- */
+/* time: detik per soal | lives: nyawa | pt: poin jawaban benar | kill: poin hancurkan virus
+   guards: jumlah virus penghadang | hp: nyawa tiap virus | fire: jeda tembakan virus (dtk)
+   bsp: kecepatan peluru virus | sway: kecepatan gerak jawaban | divers: virus penabrak
+   divecd: jeda serangan penabrak | respawn: waktu virus muncul lagi | shuffle: jawaban bertukar tiap n detik */
+const LV=[null,
+ {n:'Mudah', time:60,lives:5,pt:10,kill:1,guards:2,hp:1,fire:2.8,bsp:150,sway:30,divers:0,divecd:0,  respawn:4.5,shuffle:0,
+  tip:['Virus penghadang menutupi jawaban. Hancurkan dulu, baru bidik jawaban.','Peluru virus bisa dihindari. Terus bergerak!']},
+ {n:'Sedang',time:55,lives:5,pt:15,kill:1,guards:3,hp:1,fire:2.5,bsp:175,sway:42,divers:0,divecd:0,  respawn:4,  shuffle:0,
+  tip:['Virus lebih banyak dan lebih sering menembak ke arahmu.','Jawaban bergerak lebih cepat.']},
+ {n:'Sulit', time:50,lives:4,pt:20,kill:2,guards:3,hp:2,fire:2.2,bsp:200,sway:54,divers:1,divecd:7,  respawn:3.5,shuffle:0,
+  tip:['Setiap virus punya 2 nyawa.','Awas! Virus penabrak akan menyerbu ke arahmu. Menghindarlah saat ia berkedip merah.']},
+ {n:'Ahli',  time:45,lives:4,pt:25,kill:2,guards:4,hp:2,fire:1.9,bsp:225,sway:66,divers:1,divecd:5.5,respawn:3,  shuffle:10,
+  tip:['Posisi jawaban bisa bertukar tempat. Cek lagi sebelum menembak!','Virus lebih rapat menjaga jawaban yang benar.']},
+ {n:'Master',time:40,lives:3,pt:30,kill:3,guards:5,hp:3,fire:1.6,bsp:250,sway:78,divers:2,divecd:4.5,respawn:2.5,shuffle:7,
+  tip:['Virus terkuat: 3 nyawa tiap virus, dan ada dua virus penabrak.','Jawaban cepat bertukar tempat. Selesaikan untuk jadi Master!']}
+];
+/* [jenis (I = Ikatan Kimia, S = Stoikiometri), soal, [jawaban benar, salah, salah, salah], level] */
+const B=[
+ /* Level 1 */
+ ['I','Ikatan antara atom logam dan nonlogam melalui serah terima elektron disebut ikatan...',['ion','kovalen','logam','hidrogen'],1],
+ ['I','Ikatan kimia pada molekul air (H₂O) adalah ikatan...',['kovalen','ion','logam','van der Waals'],1],
+ ['I','Atom Na melepas 1 elektron sehingga menjadi ion...',['Na⁺','Na⁻','Na²⁺','Na²⁻'],1],
+ ['I','Atom Cl menerima 1 elektron sehingga menjadi ion...',['Cl⁻','Cl⁺','Cl²⁻','Cl²⁺'],1],
+ ['I','Menurut aturan oktet, atom stabil jika kulit terluarnya berisi 8 elektron seperti...',['gas mulia','halogen','logam alkali','logam transisi'],1],
+ ['I','"Lautan elektron" adalah ciri khas ikatan...',['logam','ion','kovalen','hidrogen'],1],
+ ['S','Bilangan Avogadro adalah...',['6,02 × 10²³ partikel','6,02 × 10²² partikel','22,4 partikel','3,01 × 10²³ partikel'],1],
+ ['S','Mr CO₂ (Ar C = 12, O = 16) adalah...',['44','28','32','60'],1],
+ /* Level 2 */
+ ['I','Ikatan kovalen terjadi antara...',['sesama unsur nonlogam','logam dan nonlogam','sesama logam','gas mulia dan logam'],2],
+ ['I','Logam dapat menghantarkan listrik karena...',['elektron valensinya bebas bergerak','ion-ionnya bergerak bebas','intinya bermuatan negatif','tidak punya elektron'],2],
+ ['I','Unsur yang membentuk ikatan ion dengan Cl adalah...',['Na','C','N','O'],2],
+ ['S','Mr H₂SO₄ (Ar H = 1, S = 32, O = 16) adalah...',['98','50','64','34'],2],
+ ['S','Mol dari 36 g H₂O (Mr = 18) adalah...',['2 mol','0,5 mol','4 mol','18 mol'],2],
+ ['S','Mol dari 11,2 L gas pada STP adalah...',['0,5 mol','1 mol','2 mol','11,2 mol'],2],
+ ['S','Massa 0,2 mol NaOH (Mr = 40) adalah...',['8 g','4 g','20 g','0,8 g'],2],
+ ['S','Volume 2 mol gas pada STP adalah...',['44,8 L','22,4 L','11,2 L','2 L'],2],
+ /* Level 3 */
+ ['I','Rumus senyawa dari Mg (golongan IIA) dan Cl (golongan VIIA) adalah...',['MgCl₂','MgCl','Mg₂Cl','Mg₂Cl₃'],3],
+ ['I','Dua atom O dalam molekul O₂ berikatan kovalen...',['rangkap dua','tunggal','rangkap tiga','koordinasi'],3],
+ ['S','Jumlah partikel dalam 0,5 mol zat adalah...',['3,01 × 10²³','6,02 × 10²³','1,2 × 10²⁴','3,01 × 10²²'],3],
+ ['S','Massa 2 mol NaCl (Mr = 58,5) adalah...',['117 g','58,5 g','29,25 g','234 g'],3],
+ ['S','Molaritas larutan berisi 0,5 mol zat dalam 250 mL adalah...',['2 M','0,5 M','0,125 M','4 M'],3],
+ ['S','Volume 8 g gas O₂ (Mr = 32) pada STP adalah...',['5,6 L','11,2 L','22,4 L','2,8 L'],3],
+ ['S','Jumlah molekul dalam 9 g H₂O (Mr = 18) adalah...',['3,01 × 10²³','6,02 × 10²³','1,5 × 10²³','9,03 × 10²³'],3],
+ ['S','Sesuai hukum Lavoisier, 12 g karbon bereaksi dengan 32 g oksigen. Massa karbon dioksida yang terbentuk adalah...',['44 g','20 g','32 g','384 g'],3],
+ /* Level 4 */
+ ['S','Molaritas larutan 4 g NaOH (Mr = 40) dalam 500 mL adalah...',['0,2 M','0,1 M','0,8 M','2 M'],4],
+ ['S','Massa NaCl (Mr = 58,5) untuk membuat 200 mL larutan 0,5 M adalah...',['5,85 g','11,7 g','58,5 g','2,925 g'],4],
+ ['S','Mr (NH₄)₂SO₄ (Ar N = 14, H = 1, S = 32, O = 16) adalah...',['132','114','96','150'],4],
+ ['S','Persentase massa Na dalam NaCl (Ar Na = 23, Cl = 35,5) adalah...',['39,3%','60,7%','50%','23%'],4],
+ ['S','Pada reaksi N₂ + 3H₂ → 2NH₃, sebanyak 3 mol H₂ menghasilkan NH₃ sebanyak...',['2 mol','3 mol','1 mol','6 mol'],4],
+ ['S','Sebanyak 50 mL larutan HCl 2 M diencerkan hingga 200 mL. Molaritasnya menjadi...',['0,5 M','1 M','4 M','0,25 M'],4],
+ ['I','Jumlah pasangan elektron bebas pada atom pusat NH₃ (nomor atom N = 7) adalah...',['1','0','2','3'],4],
+ ['I','Senyawa ion memiliki titik leleh tinggi karena...',['tarikan elektrostatik antar ion sangat kuat','molekulnya sangat besar','ikatan kovalennya rangkap tiga','ada lautan elektron'],4],
+ /* Level 5 */
+ ['I','Ikatan antara NH₃ dan H⁺ pada pembentukan ion NH₄⁺ adalah ikatan...',['kovalen koordinasi','ion','logam','kovalen rangkap dua'],5],
+ ['I','Molekul CO₂ nonpolar walaupun ikatan C=O polar, karena...',['bentuk linear, momen dipol saling meniadakan','tidak ada ikatan polar','C dan O sama elektronegatif','tidak punya elektron valensi'],5],
+ ['I','Ikatan hidrogen terjadi jika atom H terikat pada atom...',['F, O, atau N','C, S, atau P','Na, K, atau Li','He, Ne, atau Ar'],5],
+ ['S','Senyawa berumus empiris CH₂O dengan Mr = 180 (Ar C = 12, H = 1, O = 16) memiliki rumus molekul...',['C₆H₁₂O₆','C₃H₆O₃','C₁₂H₂₄O₁₂','CH₂O'],5],
+ ['S','Pada reaksi 2H₂ + O₂ → 2H₂O, sebanyak 3 mol H₂ direaksikan dengan 2 mol O₂. Pereaksi pembatasnya adalah...',['H₂','O₂','H₂O','tidak ada'],5],
+ ['S','Pada reaksi 2Mg + O₂ → 2MgO, massa MgO (Mr = 40) dari 2,4 g Mg (Ar = 24) adalah...',['4 g','2,4 g','8 g','40 g'],5],
+ ['S','Pada reaksi Zn + 2HCl → ZnCl₂ + H₂, volume H₂ (STP) dari 6,5 g Zn (Ar = 65) adalah...',['2,24 L','4,48 L','22,4 L','1,12 L'],5],
+ ['S','Pada reaksi CaCO₃ → CaO + CO₂, massa CaCO₃ (Mr = 100) untuk menghasilkan 11,2 L gas CO₂ (STP) adalah...',['50 g','100 g','25 g','112 g'],5]
+];
+
+/* ---------- 3. MENU ---------- */
+let SEL=1,PL=null;   /* SEL: level terpilih | PL: data pemain {name, kelas} */
+const go=id=>{document.querySelectorAll('.scr').forEach(e=>e.classList.toggle('on',e.id===id));window.scrollTo(0,0)};
+function rlv(){
+ SEL=Math.min(SEL,UL());
+ const el=$('#lv');el.innerHTML='';
+ for(let i=1;i<=5;i++){
+  const b=document.createElement('button'),lk=i>UL();
+  b.className='lvb'+(i===SEL?' on':'');b.disabled=lk;
+  b.setAttribute('aria-label','Level '+i+' '+LV[i].n+(lk?', terkunci':''));
+  b.setAttribute('aria-pressed',i===SEL?'true':'false');
+  b.innerHTML='<i>'+(lk?'🔒':i)+'</i><small>'+LV[i].n+'</small>';
+  b.onclick=()=>{SEL=i;rlv()};
+  el.append(b);
+ }
+ const c=LV[SEL];
+ $('#li').textContent='Level '+SEL+' '+c.n+': '+c.time+' dtk per soal · '+c.lives+' nyawa · '+c.guards+' virus penghadang · +'+c.pt+' per jawaban benar'+(SEL<5?'. Selesaikan untuk membuka level berikutnya.':'.');
+}
+try{const p=JSON.parse(lsGet('ath_p','null'));if(p){$('#nm').value=p.name;$('#kl').value=p.kelas}}catch(e){}
+rlv();
+
+$('#play').onclick=()=>{
+ const n=$('#nm').value.trim(),k=$('#kl').value.trim();
+ if(!n||!k){$('#err').textContent='Isi nama dan kelas dulu.';return}
+ $('#err').textContent='';PL={name:n,kelas:k};lsSet('ath_p',JSON.stringify(PL));begin();
+};
+
+/* ---------- 4. SUARA ---------- */
+let AC=null,NB=null,MUTE=lsGet('ath_m','0')==='1';
+function audio(){try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();if(AC.state==='suspended')AC.resume().catch(()=>{})}catch(e){}}
+function tone(type,f0,f1,dur,vol,delay){
+ if(MUTE||!AC)return;
+ const t=AC.currentTime+(delay||0),o=AC.createOscillator(),g=AC.createGain();
+ o.type=type;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(Math.max(1,f1),t+dur);
+ g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+ o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+dur+.02);
+}
+function noise(dur,vol,f0,f1){
+ if(MUTE||!AC)return;
+ if(!NB){NB=AC.createBuffer(1,AC.sampleRate,AC.sampleRate);const d=NB.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1}
+ const t=AC.currentTime,s=AC.createBufferSource(),f=AC.createBiquadFilter(),g=AC.createGain();
+ s.buffer=NB;f.type='lowpass';f.frequency.setValueAtTime(f0,t);f.frequency.exponentialRampToValueAtTime(f1,t+dur);
+ g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+ s.connect(f);f.connect(g);g.connect(AC.destination);s.start(t);s.stop(t+dur+.02);
+}
+function sfx(k){
+ if(MUTE||!AC)return;
+ try{switch(k){
+  case 'shoot':tone('square',880,360,.09,.04);break;
+  case 'hit':tone('triangle',360,170,.09,.1);break;
+  case 'boom':noise(.4,.35,2200,80);tone('sine',130,30,.35,.3);break;
+  case 'ok':noise(.6,.3,2400,70);[523,659,784,1047].forEach((f,i)=>tone('sine',f,f,.16,.14,i*.07));break;
+  case 'bad':tone('sawtooth',190,55,.42,.2);break;
+  case 'hurt':tone('square',160,45,.32,.16);noise(.25,.25,1200,80);break;
+  case 'warn':tone('square',700,700,.12,.05);tone('square',900,900,.12,.05,.14);break;
+  case 'swap':tone('triangle',500,900,.12,.06);break;
+  case 'start':tone('sine',440,880,.18,.08);break;
+  case 'win':[523,659,784,1047,1319].forEach((f,i)=>tone('triangle',f,f,.22,.15,i*.12));break;
+  case 'lose':[392,330,262,196].forEach((f,i)=>tone('sawtooth',f,f*.97,.3,.12,i*.18));break;
+ }}catch(e){}
+}
+function setMute(m){MUTE=m;lsSet('ath_m',m?'1':'0');$('#bsnd').classList.toggle('off',m);$('#bsnd').setAttribute('aria-pressed',m?'true':'false')}
+$('#bsnd').onclick=()=>{setMute(!MUTE);audio()};
+setMute(MUTE);
+
+/* ---------- 5. MESIN PERMAINAN ---------- */
+const cv=$('#cv'),ctx=cv.getContext('2d'),ar=$('#ar');
+let S=null,P=null,F=null,W=0,H=0,U=1,raf=0,last=0,lastT=-1;
+const ctl={keys:{left:0,right:0,up:0,down:0},fk:0,fm:0,fb:0,ptr:false,tx:0,ty:0};
+const STARS=Array.from({length:70},()=>({x:Math.random(),y:Math.random(),z:Math.random()}));
+
+/* Ukuran arena mengikuti layar. U = faktor skala sprite & kecepatan. */
+function fit(){
+ const w=ar.clientWidth,h=ar.clientHeight;if(!w||!h)return;
+ const d=Math.min(window.devicePixelRatio||1,2),cw=Math.round(w*d),ch=Math.round(h*d);
+ if(cv.width!==cw||cv.height!==ch){cv.width=cw;cv.height=ch}
+ ctx.setTransform(d,0,0,d,0,0);
+ const sx=W?w/W:1,sy=H?h/H:1,changed=w!==W||h!==H;
+ W=w;H=h;U=clamp(W/640,.62,1.1);
+ if(S&&P&&changed){
+  [S.PB,S.E].forEach(a=>a.forEach(o=>{o.x*=sx;o.y*=sy}));
+  S.G.forEach(g=>{g.x*=sx;g.y*=sy;g.r=20*U});
+  P.x*=sx;P.y*=sy;P.tx*=sx;P.ty*=sy;P.px=P.x;
+  if(S.A.length)layoutAnswers(S.A);
+ }
+}
+if(window.ResizeObserver)new ResizeObserver(fit).observe(ar);
+addEventListener('resize',fit);
+
+function begin(){
+ audio();
+ const c=LV[SEL];
+ S={c,L:SEL,score:0,lives:c.lives,i:0,ok:0,kills:0,kq:0,qs:shuf(B.filter(q=>q[3]===SEL)),
+    st:{I:[0,0],S:[0,0]},mode:'ready',t:0,tq:0,tqMax:1,wait:0,sh:0,shake:0,dead:false,gc:0,pm:'play',
+    A:[],G:[],E:[],PB:[],FX:[],PU:[],rs:[],cur:null,gy:0,minY:0};
+ F={o:0,dir:1};
+ go('s1');fit();
+ P={x:W/2,y:H-44*U,tx:W/2,ty:H-44*U,px:W/2,cd:0,inv:0,tilt:0};
+ ctl.ptr=false;ctl.fk=ctl.fm=ctl.fb=0;
+ $('#hp').textContent=PL.name+' · '+PL.kelas+' · Level '+SEL;
+ $('#q').textContent='Bersiaplah, pilot!';$('#fb').textContent='';$('#fb').className='';ar.classList.remove('hit');
+ hud();timerUI();showIntro();
+ cancelAnimationFrame(raf);last=0;raf=requestAnimationFrame(frame);
+}
+function showIntro(){
+ const c=S.c,touch=matchMedia('(pointer:coarse)').matches||document.body.classList.contains('touch');
+ ov('LEVEL '+S.L,c.n.toUpperCase(),[
+  touch?'Geser jari di arena untuk bergerak, tahan TEMBAK untuk menembak.':'Gerak: panah / WASD atau mouse. Tembak: Spasi atau klik.',
+  ...c.tip,
+  c.time+' dtk per soal · '+c.lives+' nyawa · +'+c.pt+' per jawaban benar'
+ ],'MULAI',()=>{hideOv();next();});
+}
+
+/* Menyiapkan satu soal: jawaban, virus penghadang, waktu. */
+function next(){
+ if(S.lives<=0||S.i>=S.qs.length)return fin();
+ const [tp,q,a]=S.qs[S.i];
+ S.cur={tp,a0:a[0]};S.tq=S.tqMax=S.c.time;S.mode='play';S.kq=0;S.sh=S.c.shuffle;
+ S.E.length=0;S.PB.length=0;S.G.length=0;S.rs.length=0;
+ $('#q').textContent=q;$('#fb').textContent='';$('#fb').className='';ar.classList.remove('hit');
+ buildAnswers(a);
+ for(let i=0;i<S.c.guards;i++)spawnGuard(true);
+ hud();timerUI();sfx('start');
+}
+function wrap(t,mw){
+ const w=t.split(' '),L=[];let l='';
+ w.forEach(x=>{const n=l?l+' '+x:x;if(ctx.measureText(n).width>mw&&l){L.push(l);l=x}else l=n});
+ L.push(l);return L;
+}
+/* Tata letak jawaban: 4 kolom di layar lebar, 2x2 di layar sempit. */
+function layoutAnswers(items){
+ const cols=W<720?2:4,rows=4/cols,fs=W<400?12.5:W<720?14:16,lh=Math.round(fs*1.22),pad=8,
+  amp=clamp(W*.045,8,36),mg=8,gap=8,slotW=(W-2*mg-2*amp)/cols,bw=slotW-gap,top=10;
+ ctx.font='700 '+fs+'px Rajdhani,system-ui,sans-serif';
+ let ml=1;items.forEach(o=>{o.lines=wrap(o.txt,bw-2*pad-6);ml=Math.max(ml,o.lines.length)});
+ const bh=Math.max(36,ml*lh+2*pad);
+ Object.assign(F,{cols,rows,fs,lh,amp,mg,gap,slotW,bw,bh,top});
+ items.forEach(o=>{o.w=bw;o.h=bh});
+ S.gy=top+rows*bh+(rows-1)*gap+36*U;
+ S.minY=Math.min(Math.max(H*.5,S.gy+48*U),H-60*U);
+}
+function slotPos(s){
+ const c=s%F.cols,r=(s/F.cols)|0,off=r%2?-F.o:F.o;
+ return{x:F.mg+F.amp+F.slotW*(c+.5)+off,y:F.top+F.bh/2+r*(F.bh+F.gap)};
+}
+function buildAnswers(a){
+ const items=shuf(a.map((t,i)=>({txt:t,ok:i===0,st:'',slot:0,x:0,y:0,lines:[],w:0,h:0})));
+ items.forEach((o,i)=>o.slot=i);
+ S.A=items;layoutAnswers(items);
+ items.forEach(o=>{o.x=slotPos(o.slot).x;o.y=-F.bh});   /* meluncur masuk dari atas */
+}
+function reshuffle(){
+ const sl=shuf(S.A.map(o=>o.slot));S.A.forEach((o,i)=>o.slot=sl[i]);
+ sfx('swap');pop(W/2,F.top+F.bh+8,'ACAK!','#ffd400');
+}
+
+/* ----- virus ----- */
+function spawnGuard(edge){
+ const c=S.c,g={k:S.gc++,x:edge?(Math.random()<.5?-30:W+30):rnd(W*.15,W*.85),y:S.gy,r:20*U,hp:c.hp,max:c.hp,ph:rnd(0,6.28),
+  fire:rnd(1.3,c.fire*1.5),at:0,anc:null,st:'patrol',sw:0,tx:0,ty:0,flash:0,
+  diver:S.G.filter(o=>o.diver).length<c.divers,dcd:0};
+ g.dcd=g.diver?rnd(2.5,4.5):0;
+ S.G.push(g);return g;
+}
+/* Virus menjaga jawaban: di level tinggi lebih sering menjaga jawaban yang benar. */
+function pickAnchor(g){
+ g.anc=(S.L>=2&&Math.random()<.6)?S.A.find(b=>b.ok):S.A[(Math.random()*S.A.length)|0];
+ g.at=rnd(3,5);
+}
+const patrolPos=g=>({x:clamp(g.anc.x+Math.sin(g.ph*1.1)*F.slotW*.5,g.r,W-g.r),y:S.gy+Math.sin(g.ph*1.7)*9*U+(g.k%2?16*U:0)});
+function updGuard(g,dt){
+ g.ph+=dt;g.at-=dt;if(g.flash>0)g.flash-=dt;
+ if(g.at<=0||!g.anc)pickAnchor(g);
+ const c=S.c;
+ if(g.st==='patrol'||g.st==='back'){
+  const p=patrolPos(g);
+  if(g.st==='patrol'){
+   g.x+=(p.x-g.x)*Math.min(1,2.4*dt);g.y+=(p.y-g.y)*Math.min(1,3*dt);
+   if(g.diver){g.dcd-=dt;if(g.dcd<=0){g.st='warn';g.sw=.8;sfx('warn')}}
+  }else{
+   const dx=p.x-g.x,dy=p.y-g.y,d=Math.hypot(dx,dy),s=240*U*dt;
+   if(d<=s+2){g.st='patrol';g.dcd=c.divecd*rnd(.8,1.2)}else{g.x+=dx/d*s;g.y+=dy/d*s}
+  }
+  g.fire-=dt;
+  if(g.fire<=0){if(g.y<P.y-50*U){gShoot(g);g.fire=c.fire*rnd(.8,1.25)}else g.fire=.5}
+ }else if(g.st==='warn'){
+  g.sw-=dt;if(g.sw<=0){g.st='dive';g.tx=P.x;g.ty=P.y}
+ }else if(g.st==='dive'){
+  const dx=g.tx-g.x,dy=g.ty-g.y,d=Math.hypot(dx,dy)||1,s=(280+S.L*14)*U*dt,m=Math.min(s,d);
+  g.x+=dx/d*m;g.y+=dy/d*m;
+  if(d<=s+2||g.y>H-g.r)g.st='back';
+ }
+}
+function gShoot(g){
+ const sp=rnd(-1,1)*(.34-S.L*.05),a=Math.atan2(P.y-g.y,P.x-g.x)+sp,v=S.c.bsp*U;
+ S.E.push({x:g.x,y:g.y+g.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v});
+}
+function dmg(g){
+ g.hp--;
+ if(g.hp>0){g.flash=.12;burst(g.x,g.y+g.r*.5,'#b6ff3c',6,120);sfx('hit')}else kill(g);
+}
+function kill(g,noScore){
+ const i=S.G.indexOf(g);if(i>=0)S.G.splice(i,1);
+ S.rs.push(S.c.respawn);
+ burst(g.x,g.y,g.diver?'#ff7a3c':'#b6ff3c',26,230);burst(g.x,g.y,'#ffffff',8,160);sfx('boom');
+ if(!noScore){
+  S.kills++;S.kq++;
+  if(S.kq<=S.c.guards){S.score+=S.c.kill;pop(g.x,g.y-g.r,'+'+S.c.kill,'#00f0ff')}
+  hud();
+ }
+}
+function clearEnemies(){
+ S.G.forEach(g=>burst(g.x,g.y,'#b6ff3c',10,140));
+ S.G.length=0;S.E.length=0;S.rs.length=0;
+}
+
+/* ----- jawaban, nyawa, hasil soal ----- */
+function resolve(kind,b){
+ const c=S.c,T=S.cur.tp;
+ S.st[T][1]++;S.i++;
+ S.mode='between';S.PB.length=0;clearEnemies();
+ if(kind==='ok'){
+  S.st[T][0]++;S.ok++;S.score+=c.pt;b.st='good';S.A.forEach(o=>{if(o!==b)o.st='dim'});
+  burst(b.x,b.y,'#b6ff3c',34,260);burst(b.x,b.y,'#ffd400',18,180);pop(b.x,b.y,'+'+c.pt,'#b6ff3c');sfx('ok');
+  $('#fb').className='';$('#fb').textContent='Benar! +'+c.pt;S.wait=1.2;
+ }else{
+  S.lives--;if(b)b.st='bad';S.A.forEach(o=>{if(o.ok)o.st='good'});
+  sfx('bad');S.shake=.35;flashHit();
+  $('#fb').className='bad';
+  $('#fb').textContent=(kind==='time'?'Waktu habis! ':'Salah! ')+'Jawaban benar: '+S.cur.a0+(S.lives<=0?'. Nyawa habis!':'');
+  S.wait=2;
+ }
+ hud();
+}
+function hurt(){
+ if(P.inv>0||S.mode!=='play')return;
+ S.lives--;P.inv=1.8;S.shake=.35;flashHit();sfx('hurt');
+ burst(P.x,P.y,'#ff3b6b',22,200);hud();
+ if(S.lives<=0){
+  S.mode='between';S.dead=true;S.wait=1.5;S.E.length=0;
+  burst(P.x,P.y,'#00f0ff',40,300);burst(P.x,P.y,'#ffffff',16,200);sfx('boom');
+  $('#fb').className='bad';$('#fb').textContent='Pesawatmu hancur. Nyawa habis!';
+ }
+}
+function flashHit(){ar.classList.add('hit');setTimeout(()=>ar.classList.remove('hit'),350)}
+
+/* ----- efek ----- */
+function burst(x,y,col,n,sp){
+ for(let i=0;i<n&&S.FX.length<260;i++){
+  const a=rnd(0,6.283),v=rnd(.2,1)*sp;
+  S.FX.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:rnd(.35,.8),m:.8,c:col,s:rnd(1.5,3.5)*U});
+ }
+}
+function pop(x,y,t,c){S.PU.push({x,y,l:1,m:1,t,c})}
+
+/* ----- update per frame ----- */
+function frame(t){
+ raf=requestAnimationFrame(frame);
+ const dt=last?Math.min((t-last)/1000,.05):0;last=t;
+ if(!S)return;
+ update(dt);draw();
+}
+function moveShip(dt){
+ const k=ctl.keys,sp=340*U;
+ const dx=(k.right?1:0)-(k.left?1:0),dy=(k.down?1:0)-(k.up?1:0);
+ if(dx||dy){ctl.ptr=false;const l=Math.hypot(dx,dy);P.x+=dx/l*sp*dt;P.y+=dy/l*sp*dt}
+ else if(ctl.ptr){const e=Math.min(1,14*dt);P.x+=(ctl.tx-P.x)*e;P.y+=(ctl.ty-P.y)*e}
+ P.x=clamp(P.x,14*U,W-14*U);P.y=clamp(P.y,S.minY||0,H-26*U);
+ if(dt>0){const vx=(P.x-P.px)/dt;P.tilt+=(clamp(vx/(300*U),-1,1)-P.tilt)*Math.min(1,10*dt)}
+ P.px=P.x;
+}
+function update(dt){
+ const m=S.mode;
+ if(m==='pause'||m==='end')return;
+ if(!RM)STARS.forEach(s=>{s.y=(s.y+dt*(.012+s.z*.05))%1});
+ if(m==='ready')return;
+ S.t+=dt;S.shake=Math.max(0,S.shake-dt);P.inv=Math.max(0,P.inv-dt);
+ moveShip(dt);
+ /* formasi jawaban bergerak ke kiri-kanan, lalu menuju slotnya */
+ if(S.A.length){
+  F.o+=F.dir*S.c.sway*dt;if(Math.abs(F.o)>F.amp){F.o=clamp(F.o,-F.amp,F.amp);F.dir*=-1}
+  const e=Math.min(1,7*dt);
+  S.A.forEach(b=>{const p=slotPos(b.slot);b.x+=(p.x-b.x)*e;b.y+=(p.y-b.y)*e});
+ }
+ if(m==='play')updPlay(dt);
+ else if(m==='between'){S.wait-=dt;if(S.wait<=0)next()}
+ S.FX.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vx*=.985;p.vy*=.985;p.l-=dt});S.FX=S.FX.filter(p=>p.l>0);
+ S.PU.forEach(p=>{p.y-=40*dt;p.l-=dt});S.PU=S.PU.filter(p=>p.l>0);
+ if(S.mode==='play')timerUI();
+}
+function updPlay(dt){
+ const c=S.c;
+ S.tq=Math.max(0,S.tq-dt);
+ if(S.tq<=0){resolve('time');return}
+ /* tembak */
+ P.cd-=dt;
+ if((ctl.fk||ctl.fm||ctl.fb)&&P.cd<=0){S.PB.push({x:P.x,y:P.y-20*U});P.cd=.26;sfx('shoot')}
+ if(c.shuffle){S.sh-=dt;if(S.sh<=0){reshuffle();S.sh=c.shuffle}}
+ for(let i=S.rs.length-1;i>=0;i--){S.rs[i]-=dt;if(S.rs[i]<=0){S.rs.splice(i,1);spawnGuard(true)}}
+ S.G.forEach(g=>updGuard(g,dt));
+ /* peluru pemain: kena virus dulu, baru jawaban */
+ for(let i=S.PB.length-1;i>=0;i--){
+  const b=S.PB[i];b.y-=640*U*dt;
+  if(b.y<-20){S.PB.splice(i,1);continue}
+  let hit=false;
+  for(const g of S.G){if(Math.hypot(b.x-g.x,b.y-g.y)<g.r+4){hit=true;dmg(g);break}}
+  if(!hit){for(const a of S.A){if(Math.abs(b.x-a.x)<a.w/2&&Math.abs(b.y-a.y)<a.h/2){hit=true;resolve(a.ok?'ok':'bad',a);break}}}
+  if(S.mode!=='play')return;
+  if(hit)S.PB.splice(i,1);
+ }
+ /* peluru virus */
+ for(let i=S.E.length-1;i>=0;i--){
+  const e=S.E[i];e.x+=e.vx*dt;e.y+=e.vy*dt;
+  if(e.y>H+20||e.y<-20||e.x<-20||e.x>W+20){S.E.splice(i,1);continue}
+  if(P.inv<=0&&Math.hypot(e.x-P.x,e.y-P.y)<15*U){S.E.splice(i,1);hurt();if(S.mode!=='play')return}
+ }
+ /* tabrakan virus dengan pesawat */
+ for(const g of S.G){
+  if(P.inv<=0&&Math.hypot(g.x-P.x,g.y-P.y)<g.r*.85+10*U){kill(g,true);hurt();break}
+ }
+}
+function hud(){
+ $('#hl').textContent='♥'.repeat(Math.max(0,S.lives))+'♡'.repeat(Math.max(0,S.c.lives-S.lives));
+ $('#hs').textContent=S.score;
+ $('#hn').textContent=Math.min(S.i+1,S.qs.length)+'/'+S.qs.length;
+ $('#hk').textContent=S.kills;
+}
+function timerUI(){
+ const s=Math.ceil(S.tq);
+ if(s!==lastT){lastT=s;$('#tt').textContent=s+' dtk'}
+ $('#tbi').style.width=(S.tqMax?S.tq/S.tqMax*100:0)+'%';
+ $('#tbi').classList.toggle('low',S.tq<10);
+}
+
+/* ----- jeda, keluar, selesai ----- */
+const ovE=$('#ov');
+function ov(t,sub,lines,label,fn){
+ $('#ovt').textContent=t;$('#ovs').textContent=sub||'';
+ const ul=$('#ovl');ul.innerHTML='';
+ (lines||[]).forEach(x=>{const li=document.createElement('li');li.textContent=x;ul.append(li)});
+ const b=$('#ovgo');b.textContent=label;b.onclick=fn;ovE.hidden=false;
+ setTimeout(()=>{try{b.focus({preventScroll:true})}catch(e){}},30);
+}
+const hideOv=()=>{ovE.hidden=true};
+function pause(){
+ if(!S||S.mode==='ready'||S.mode==='pause'||S.mode==='end')return;
+ S.pm=S.mode;S.mode='pause';
+ ctl.keys={left:0,right:0,up:0,down:0};ctl.fk=ctl.fm=ctl.fb=0;$('#fire').classList.remove('dn');
+ ov('JEDA','',[],'LANJUT',resume);
+}
+function resume(){if(!S||S.mode!=='pause')return;hideOv();S.mode=S.pm;last=0}
+function quit(){cancelAnimationFrame(raf);if(S)S.mode='end';S=null;hideOv();go('s0');rlv()}
+$('#ovq').onclick=quit;
+$('#bpause').onclick=()=>{$('#bpause').blur();pause()};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});
+
+function fin(){
+ cancelAnimationFrame(raf);
+ S.mode='end';hideOv();
+ const win=S.lives>0,n=S.i,acc=n?Math.round(S.ok/n*100):0;
+ const r={name:PL.name,kelas:PL.kelas,score:S.score,ok:S.ok,n,I:S.st.I,S:S.st.S,lv:S.L,k:S.kills,t:Date.now()};
+ LS.add(r);
+ if(DB)DB.collection('scores').add({name:r.name,kelas:r.kelas,score:r.score,lv:r.lv,t:r.t}).catch(()=>{});
+ SEL=S.L;
+ if(win&&S.L<5&&UL()<=S.L)lsSet('ath_u',S.L+1);
+ const stars=win?(acc>=90?3:acc>=70?2:1):0;
+ $('#eh').textContent=win?'MISI SELESAI':'MISI GAGAL';
+ $('#est').textContent='★'.repeat(stars)+'☆'.repeat(3-stars);
+ $('#et').textContent=!win?'Nyawa habis. Virus menang kali ini, coba lagi!':S.L===5?'Luar biasa! Semua level berhasil kamu taklukkan.':'Semua soal selesai. Virus berhasil dikalahkan!';
+ $('#en').textContent=PL.name;$('#ek').textContent=PL.kelas;$('#el').textContent='Level '+S.L+' '+S.c.n;
+ $('#es').textContent=S.score;$('#ev').textContent=S.kills;$('#ea').textContent=acc+'%';
+ $('#nxt').hidden=!(win&&S.L<5);
+ sfx(win?'win':'lose');
+ rlv();go('s2');
+}
+$('#again').onclick=()=>begin();
+$('#nxt').onclick=()=>{SEL=Math.min(5,S.L+1);begin()};
+$('#done').onclick=()=>{S=null;go('s0');rlv()};
+document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(S&&S.mode==='end'?'s2':'s0'));
+
+/* ---------- 6. GAMBAR (CANVAS) ---------- */
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ ctx.save();
+ if(S.shake>0&&!RM)ctx.translate(rnd(-1,1)*S.shake*16,rnd(-1,1)*S.shake*16);
+ drawStars();drawSight();S.A.forEach(drawBubble);S.G.forEach(drawGuard);drawShots();drawShip();drawFX();
+ ctx.restore();
+}
+function drawStars(){
+ ctx.save();
+ STARS.forEach((s,i)=>{
+  ctx.globalAlpha=.25+s.z*.6*(.7+.3*Math.sin(S.t*2+s.x*20));
+  ctx.fillStyle=i%7===0?'#ff2bd6':'#9fe8ff';
+  const z=1+s.z*1.6;ctx.fillRect(s.x*W,s.y*H,z,z);
+ });
+ ctx.restore();
+}
+/* Garis bidik: berhenti di benda pertama yang akan terkena peluru. */
+function drawSight(){
+ if(S.mode!=='play')return;
+ let ey=0;
+ S.G.forEach(g=>{if(Math.abs(g.x-P.x)<g.r&&g.y<P.y)ey=Math.max(ey,g.y+g.r)});
+ S.A.forEach(b=>{if(Math.abs(b.x-P.x)<b.w/2)ey=Math.max(ey,b.y+b.h/2)});
+ ctx.save();
+ ctx.strokeStyle='rgba(0,240,255,.3)';ctx.lineWidth=1.5;ctx.setLineDash([4,8]);
+ ctx.beginPath();ctx.moveTo(P.x,P.y-24*U);ctx.lineTo(P.x,ey);ctx.stroke();ctx.setLineDash([]);
+ ctx.fillStyle='rgba(0,240,255,.85)';ctx.beginPath();ctx.arc(P.x,ey,3,0,6.283);ctx.fill();
+ ctx.restore();
+}
+function drawBubble(b){
+ const x=b.x-b.w/2,y=b.y-b.h/2,r=Math.min(16,b.h/2),base=b.st==='dim'?.25:1;
+ let col='#ff2bd6',bg='rgba(28,6,34,.94)',tc='#ffe1f8';
+ if(b.st==='good'){col='#b6ff3c';bg='rgba(16,40,6,.96)';tc='#e6ffb8'}
+ else if(b.st==='bad'){col='#ff3b30';bg='rgba(44,8,8,.94)';tc='#ffc2bc'}
+ const aimed=S.mode==='play'&&!b.st&&Math.abs(P.x-b.x)<b.w/2;
+ ctx.save();ctx.lineJoin='round';
+ ctx.globalAlpha=base*.22;ctx.lineWidth=7;ctx.strokeStyle=col;rr(x,y,b.w,b.h,r);ctx.stroke();
+ ctx.globalAlpha=base;rr(x,y,b.w,b.h,r);ctx.fillStyle=bg;ctx.fill();
+ ctx.lineWidth=aimed?3:2;ctx.strokeStyle=aimed?'#ffffff':col;ctx.stroke();
+ ctx.fillStyle=tc;ctx.font='700 '+F.fs+'px Rajdhani,system-ui,sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+ const n=b.lines.length;b.lines.forEach((l,i)=>ctx.fillText(l,b.x,b.y+(i-(n-1)/2)*F.lh));
+ ctx.restore();
+}
+function drawGuard(g){
+ const r=g.r,blink=g.st==='warn'&&Math.floor(S.t*18)%2===0,
+  col=blink?'#ff2b4a':(g.diver?'#ff7a3c':'#b6ff3c'),dk=g.diver?'#2a1208':'#0f2a1a';
+ ctx.save();ctx.translate(g.x,g.y);
+ if(g.st==='warn')ctx.translate(rnd(-1.5,1.5),0);
+ ctx.globalAlpha=.16;ctx.fillStyle=col;ctx.beginPath();ctx.arc(0,0,r*1.55,0,6.283);ctx.fill();ctx.globalAlpha=1;
+ ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=2.5;
+ const a0=S.t*.9+g.ph;
+ for(let i=0;i<10;i++){
+  const a=a0+i*.6283,c=Math.cos(a),s=Math.sin(a);
+  ctx.beginPath();ctx.moveTo(c*r*.9,s*r*.9);ctx.lineTo(c*r*1.25,s*r*1.25);ctx.stroke();
+  ctx.beginPath();ctx.arc(c*r*1.3,s*r*1.3,r*.1,0,6.283);ctx.fill();
+ }
+ ctx.beginPath();ctx.arc(0,0,r,0,6.283);ctx.fillStyle=g.flash>0?'#ffffff':dk;ctx.fill();ctx.lineWidth=3;ctx.stroke();
+ ctx.fillStyle='#ff2bd6';ctx.strokeStyle='#ff2bd6';ctx.lineWidth=2.4;
+ ctx.beginPath();ctx.arc(-r*.36,r*.1,r*.17,0,6.283);ctx.fill();
+ ctx.beginPath();ctx.arc(r*.36,r*.1,r*.17,0,6.283);ctx.fill();
+ ctx.beginPath();ctx.moveTo(-r*.62,-r*.28);ctx.lineTo(-r*.12,-r*.04);ctx.moveTo(r*.62,-r*.28);ctx.lineTo(r*.12,-r*.04);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(-r*.4,r*.55);ctx.quadraticCurveTo(0,r*.3,r*.4,r*.55);ctx.stroke();
+ if(g.max>1){
+  for(let i=0;i<g.max;i++){
+   ctx.fillStyle=i<g.hp?col:'rgba(255,255,255,.2)';
+   ctx.fillRect((i-(g.max-1)/2)*r*.55-r*.2,-r*1.75,r*.4,r*.15);
+  }
+ }
+ ctx.restore();
+}
+function drawShots(){
+ ctx.save();ctx.globalCompositeOperation='lighter';ctx.lineCap='round';
+ S.PB.forEach(b=>{
+  ctx.strokeStyle='rgba(0,240,255,.35)';ctx.lineWidth=7*U;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x,b.y+14*U);ctx.stroke();
+  ctx.strokeStyle='#e6faff';ctx.lineWidth=2.5*U;ctx.beginPath();ctx.moveTo(b.x,b.y);ctx.lineTo(b.x,b.y+14*U);ctx.stroke();
+ });
+ S.E.forEach(e=>{
+  ctx.fillStyle='rgba(255,43,214,.3)';ctx.beginPath();ctx.arc(e.x,e.y,10*U,0,6.283);ctx.fill();
+  ctx.fillStyle='#ff7ae6';ctx.beginPath();ctx.arc(e.x,e.y,5*U,0,6.283);ctx.fill();
+  ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(e.x,e.y,2.2*U,0,6.283);ctx.fill();
+ });
+ ctx.restore();
+}
+function drawShip(){
+ if(S.dead)return;
+ ctx.save();
+ if(P.inv>0&&Math.floor(S.t*14)%2)ctx.globalAlpha=.4;
+ ctx.translate(P.x,P.y);ctx.rotate(P.tilt*.2);ctx.scale(U,U);
+ const fl=9+Math.random()*9;
+ ctx.fillStyle='#ff2bd6';ctx.beginPath();ctx.moveTo(-5,12);ctx.lineTo(0,12+fl*1.3);ctx.lineTo(5,12);ctx.closePath();ctx.fill();
+ ctx.fillStyle='#ffd400';ctx.beginPath();ctx.moveTo(-3,12);ctx.lineTo(0,12+fl);ctx.lineTo(3,12);ctx.closePath();ctx.fill();
+ ctx.beginPath();ctx.moveTo(0,-22);ctx.lineTo(18,14);ctx.lineTo(7,9);ctx.lineTo(0,15);ctx.lineTo(-7,9);ctx.lineTo(-18,14);ctx.closePath();
+ ctx.lineJoin='round';ctx.strokeStyle='rgba(0,240,255,.25)';ctx.lineWidth=8;ctx.stroke();
+ ctx.fillStyle='#04203a';ctx.fill();ctx.strokeStyle='#00f0ff';ctx.lineWidth=2.5;ctx.stroke();
+ ctx.fillStyle='#b6ff3c';ctx.beginPath();ctx.ellipse(0,-2,3.5,7,0,0,6.283);ctx.fill();
+ ctx.strokeStyle='#ff2bd6';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-11,10);ctx.lineTo(-6,2);ctx.moveTo(11,10);ctx.lineTo(6,2);ctx.stroke();
+ ctx.restore();
+}
+function drawFX(){
+ ctx.save();ctx.globalCompositeOperation='lighter';
+ S.FX.forEach(p=>{ctx.globalAlpha=clamp(p.l/p.m,0,1);ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.s,0,6.283);ctx.fill()});
+ ctx.restore();
+ ctx.save();ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.font='900 '+Math.round(18*Math.max(U,.8))+'px Orbitron,system-ui,sans-serif';
+ S.PU.forEach(p=>{ctx.globalAlpha=clamp(p.l/p.m*1.4,0,1);ctx.fillStyle=p.c;ctx.fillText(p.t,p.x,p.y)});
+ ctx.restore();
+}
+
+/* ---------- 7. KONTROL ---------- */
+/* Mouse: ikuti kursor, klik = tembak. Sentuh: geser di arena, tombol TEMBAK. */
+function ptrSet(e){
+ const r=cv.getBoundingClientRect(),off=e.pointerType==='mouse'?0:56*U;
+ ctl.tx=e.clientX-r.left;ctl.ty=e.clientY-r.top-off;ctl.ptr=true;
+}
+cv.addEventListener('pointerdown',e=>{
+ if(e.pointerType==='mouse'){ctl.fm=1}else document.body.classList.add('touch');
+ ptrSet(e);try{cv.setPointerCapture(e.pointerId)}catch(_){}
+});
+cv.addEventListener('pointermove',e=>{if(e.pointerType==='mouse'||cv.hasPointerCapture(e.pointerId))ptrSet(e)});
+cv.addEventListener('pointerup',e=>{if(e.pointerType==='mouse')ctl.fm=0});
+cv.addEventListener('pointercancel',()=>{ctl.fm=0});
+cv.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'){ctl.fm=0;ctl.ptr=false}});
+addEventListener('pointerup',()=>{ctl.fm=0});
+
+const fireB=$('#fire');
+fireB.addEventListener('pointerdown',e=>{
+ e.preventDefault();document.body.classList.add('touch');ctl.fb=1;fireB.classList.add('dn');
+ try{fireB.setPointerCapture(e.pointerId)}catch(_){}
+});
+['pointerup','pointercancel','lostpointercapture'].forEach(ev=>fireB.addEventListener(ev,()=>{ctl.fb=0;fireB.classList.remove('dn')}));
+fireB.oncontextmenu=cv.oncontextmenu=e=>e.preventDefault();
+
+const KM={ArrowLeft:'left',KeyA:'left',ArrowRight:'right',KeyD:'right',ArrowUp:'up',KeyW:'up',ArrowDown:'down',KeyS:'down'};
+const inGame=()=>S&&(S.mode==='play'||S.mode==='between')&&$('#s1').classList.contains('on');
+addEventListener('keydown',e=>{
+ if(!S||!$('#s1').classList.contains('on'))return;
+ if((e.code==='Escape'||e.code==='KeyP')&&!e.repeat){e.preventDefault();S.mode==='pause'?resume():pause();return}
+ if(!inGame())return;
+ const k=KM[e.code];
+ if(k){ctl.keys[k]=1;e.preventDefault()}
+ else if(e.code==='Space'){ctl.fk=1;e.preventDefault()}
+});
+addEventListener('keyup',e=>{
+ const k=KM[e.code];
+ if(k)ctl.keys[k]=0;
+ else if(e.code==='Space'){ctl.fk=0;if(inGame())e.preventDefault()}
+});
+addEventListener('blur',()=>{ctl.keys={left:0,right:0,up:0,down:0};ctl.fk=ctl.fm=ctl.fb=0});
+
+/* ---------- 8. PERINGKAT & DASHBOARD ---------- */
+$('#blb').onclick=$('#blb2').onclick=lb;
+$('#bdb').onclick=$('#bdb2').onclick=dash;
+
+async function lb(){
+ go('s3');
+ const el=$('#lbr');el.textContent='Memuat...';
+ let rows=LS.get(),src='skor di perangkat ini';
+ if(DB){try{const s=await DB.collection('scores').orderBy('score','desc').limit(100).get();rows=s.docs.map(d=>d.data());src='skor semua pemain'}catch(e){}}
+ const m=new Map();
+ rows.forEach(r=>{
+  const k=String(r.name).trim().toLowerCase()+'|'+String(r.kelas).trim().toLowerCase(),o=m.get(k);
+  if(!o||o.score<r.score)m.set(k,r);
+ });
+ const a=[...m.values()].sort((x,y)=>y.score-x.score).slice(0,10);
+ $('#src').textContent='10 terbaik, '+src+'. Lv = level skor terbaik.';
+ el.innerHTML=a.length?a.map((r,i)=>'<div class="row r'+(i+1)+'"><b>'+(i+1)+'</b><span>'+esc(r.name)+'</span><span>'+esc(r.kelas)+'</span><span>'+(+r.lv||1)+'</span><b>'+(+r.score||0)+'</b></div>').join(''):'<p>Belum ada skor. Jadilah yang pertama!</p>';
+}
+function dash(){
+ go('s4');
+ const el=$('#dbc'),h=LS.get(),p=PL||h[h.length-1],g=p?h.filter(r=>r.name===p.name&&r.kelas===p.kelas):[];
+ if(!g.length){el.innerHTML='<p>Belum ada permainan. Tekan Play untuk mulai.</p>';return}
+ const sum=f=>g.reduce((a,r)=>a+f(r),0),n=g.length,ans=sum(r=>r.n),acc=ans?Math.round(sum(r=>r.ok)/ans*100):0;
+ const tp=(k,l)=>{const c=sum(r=>r[k][0]),t=sum(r=>r[k][1]),v=t?Math.round(c/t*100):0;return '<div>'+l+' <b>'+v+'%</b> ('+c+'/'+t+' benar)</div><div class="bar"><i style="width:'+v+'%"></i></div>'};
+ el.innerHTML='<h3>'+esc(p.name)+' · '+esc(p.kelas)+'</h3><div class="tiles"><div><b>'+n+'</b>permainan</div><div><b>'+Math.max(...g.map(r=>r.score))+'</b>skor terbaik</div><div><b>'+Math.round(sum(r=>r.score)/n)+'</b>rata-rata skor</div><div><b>'+acc+'%</b>akurasi</div><div><b>'+sum(r=>r.k||0)+'</b>virus dihancurkan</div></div>'
+ +tp('I','Ikatan Kimia')+tp('S','Stoikiometri')+'<h3>Skor terbaik per level</h3>'
+ +[1,2,3,4,5].map(i=>{const q=g.filter(r=>(r.lv||1)===i).map(r=>r.score);return '<div class="row2"><span>Level '+i+' '+LV[i].n+'</span><b>'+(q.length?Math.max(...q):'-')+'</b></div>'}).join('')
+ +'<h3>Permainan terakhir</h3>'
+ +g.slice(-5).reverse().map(r=>'<div class="row2"><span>'+new Date(r.t).toLocaleDateString('id-ID')+' · Lv '+(r.lv||1)+'</span><b>'+r.score+' poin</b></div>').join('');
+}
+</script>
+</body></html>
